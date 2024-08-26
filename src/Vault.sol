@@ -11,6 +11,7 @@ contract Vault{
 
     USDC usdc;
     VToken vtoken;
+    address owner;
 
     struct Debt{
         uint startTime;
@@ -30,6 +31,7 @@ contract Vault{
     constructor(address _usdc, address _vtoken){
         usdc = USDC(_usdc);
         vtoken = VToken(_vtoken);
+        owner = msg.sender;
     }
 
 
@@ -39,6 +41,16 @@ contract Vault{
         lenders[msg.sender] += _amount;
     }
 
+    function withdrawFond() public {
+        require(msg.sender == owner);
+        vtoken.safeTransfer(owner, fond);
+        fond = 0;
+    }
+
+    function withdrawCustomAmount(uint _amount) public {
+        require(msg.sender == owner);
+        vtoken.safeTransfer(owner, _amount);
+    }
     function borrow(uint _amount) public{
         // check for rule 80%
         Debt[] storage debt = debts[msg.sender];
