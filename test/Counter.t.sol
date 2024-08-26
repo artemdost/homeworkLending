@@ -7,9 +7,9 @@ import {Vault} from "../src/Vault.sol";
 contract CounterTest is Test {
     Vault public vault;
 
-    function setUp() public {
-        vault = new Vault();
-    }
+    // function setUp() public {
+    //     vault = new Vault();
+    // }
 
     // function test_Increment() public {
     //     counter.increment();
